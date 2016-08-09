@@ -2,5 +2,8 @@
 README.txt
 setup.py
 ./reverse_geocoder/__init__.py
+./reverse_geocoder/all_countries_with_postal_code.csv
 ./reverse_geocoder/cKDTree_MP.py
-./reverse_geocoder/rg_cities1000.csv
+./reverse_geocoder/cleanup_job.py
+./reverse_geocoder/geo_hash.py
+./reverse_geocoder/reverse_geocoder.py
