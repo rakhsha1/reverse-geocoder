@@ -6,11 +6,11 @@ import sys
 
 
 S3_CONFIG = dict(
-    AWS_ACCESS_KEY_ID = ""
-    , AWS_SECRET_ACCESS_KEY = ""
+    AWS_ACCESS_KEY_ID = sys.argv[1]
+    , AWS_SECRET_ACCESS_KEY = sys.argv[2]
     , SOURCE_BUCKET="geoinfo"
-    , SOURCE_PATH="geoinfo"
-    , SINK_BUCKET="geoindex-data/latest"
+    , SOURCE_PATH="geoindex-data/latest"
+    , SINK_BUCKET="geoinfo"
     , SINK_PATH="complete"
 )
 
@@ -29,6 +29,8 @@ base_dir = "/tmp"
 
 keys = set()
 for page in page_iterator:
+    print page
+    # import sys. 
     for content in page["Contents"]:
         keys.add(content["Key"].strip())
 
@@ -107,7 +109,7 @@ for j, key in enumerate(keys):
             fout.close()
             print "Uploading %s" % okey
             sys.stdout.flush()
-            client.put_object(Bucket=S3_CONFIG["SINK_BUCKET"], Key="%s/%s" %(S3_CONFIG["SINK_PATH"], key.split("/")[-1]), Body=open(file_name, 'rb'))
+            # client.put_object(Bucket=S3_CONFIG["SINK_BUCKET"], Key="%s/%s" %(S3_CONFIG["SINK_PATH"], key.split("/")[-1]), Body=open(file_name, 'rb'))
             os.remove(file_name)
     except Exception, e:
         print "Error %s" % key
