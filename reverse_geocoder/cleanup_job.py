@@ -109,7 +109,7 @@ for j, key in enumerate(keys):
             fout.close()
             print "Uploading %s" % okey
             sys.stdout.flush()
-            # client.put_object(Bucket=S3_CONFIG["SINK_BUCKET"], Key="%s/%s" %(S3_CONFIG["SINK_PATH"], key.split("/")[-1]), Body=open(file_name, 'rb'))
+            client.put_object(Bucket=S3_CONFIG["SINK_BUCKET"], Key="%s/%s" %(S3_CONFIG["SINK_PATH"], key.split("/")[-1]), Body=open(file_name, 'rb'))
             os.remove(file_name)
     except Exception, e:
         print "Error %s" % key
