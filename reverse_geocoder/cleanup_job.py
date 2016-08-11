@@ -11,7 +11,7 @@ S3_CONFIG = dict(
     , SOURCE_BUCKET="geoinfo"
     , SOURCE_PATH="geoindex-data/latest"
     , SINK_BUCKET="geoinfo"
-    , SINK_PATH="complete"
+    , SINK_PATH="geoindex-data/complete"
 )
 
 
