@@ -8,10 +8,10 @@ import sys
 S3_CONFIG = dict(
     AWS_ACCESS_KEY_ID = sys.argv[1]
     , AWS_SECRET_ACCESS_KEY = sys.argv[2]
-    , SOURCE_BUCKET="geoinfo"
-    , SOURCE_PATH="geoindex-data/latest"
-    , SINK_BUCKET="geoinfo"
-    , SINK_PATH="geoindex-data/complete"
+    , SOURCE_BUCKET = sys.argv[3]
+    , SOURCE_PATH = sys.argv[4]
+    , SINK_BUCKET = sys.argv[5]
+    , SINK_PATH = sys.argv[6]
 )
 
 
