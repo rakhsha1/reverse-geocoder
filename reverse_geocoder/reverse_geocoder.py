@@ -70,7 +70,7 @@ def singleton(cls):
 
 @singleton
 class RGeocoder:
-    def __init__(self,mode=2,verbose=True):
+    def __init__(self,mode=2, verbose=True):
         self.mode = mode
         self.verbose = verbose
         coordinates, self.locations = self.extract(rel_path(RG_FILE))
@@ -81,21 +81,24 @@ class RGeocoder:
             self.tree = KDTree_MP.cKDTree_MP(coordinates)
         
 
-    def query(self,coordinates, max_distance=np.inf):
+    def query(self, coordinates, max_distance=np.inf):
         try:
             if self.mode == 1:
-                distances,indices = self.tree.query(coordinates,k=1)
+                distances, indices = self.tree.query(coordinates, k=1)
             else:
-                distances,indices = self.tree.pquery(coordinates,k=1, distance_upper_bound=max_distance)
+                distances, indices = self.tree.pquery(coordinates, k=1, distance_upper_bound=max_distance)
         except ValueError as e:
             raise e
         else:
+
+            for (distance, index) in zip(distances, indices):
+                print(distance, index)
             return [self.locations[index] if index<self.number_locations else None for index in indices]
 
-    def extract(self,local_filename):
+    def extract(self, local_filename):
         if os.path.exists(local_filename):
             if self.verbose:
-                print('Loading formatted geocoded file...')
+                print('Loading formatted geocoded file... %s' % local_filename)
             rows = csv.DictReader(open(local_filename,'rt'))
         else:
             gn_cities1000_url = GN_URL + GN_CITIES1000 + '.zip'
@@ -204,7 +207,7 @@ def get(geo_coord,mode=2,verbose=True):
     rg = RGeocoder(mode=mode,verbose=verbose)
     return rg.query([geo_coord])[0]
 
-def search(geo_coords,mode=2,verbose=True, max_distance=np.inf):
+def search(geo_coords, mode=2, verbose=True, max_distance=np.inf):
     if type(geo_coords) != tuple and type(geo_coords) != list:
         raise TypeError('Expecting a tuple or a tuple/list of tuples')
     elif type(geo_coords[0]) != tuple:

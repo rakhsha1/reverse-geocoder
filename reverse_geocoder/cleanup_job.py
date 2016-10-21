@@ -21,6 +21,7 @@ client = boto3.client(
     aws_secret_access_key=S3_CONFIG["AWS_SECRET_ACCESS_KEY"]
 )
 
+COUNTRY_LIST = ["US", "CA"]
 paginator = client.get_paginator('list_objects')
 page_iterator = paginator.paginate(Bucket=S3_CONFIG["SOURCE_BUCKET"], Prefix=S3_CONFIG["SOURCE_PATH"])
 existing =  paginator.paginate(Bucket=S3_CONFIG["SINK_BUCKET"], Prefix=S3_CONFIG["SINK_PATH"])
@@ -102,8 +103,11 @@ for j, key in enumerate(keys):
                     cc = mappings.get(country_code)
                     if cc: 
                         country_code = cc 
-                content[3] = postal_code
-                content[4] = country_code.upper()
+                   
+                country_code = country_code.upper()
+                if content[4] in COUNTRY_LIST and content[4] == country_code:
+                    content[3] = postal_code
+                # content[4] = country_code.upper()
                 fout.write("%s\t%s\n" %(_hash, chr(0001).join(content)))
 
             fout.close()
