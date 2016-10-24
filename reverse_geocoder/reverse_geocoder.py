@@ -90,9 +90,6 @@ class RGeocoder:
         except ValueError as e:
             raise e
         else:
-
-            for (distance, index) in zip(distances, indices):
-                print(distance, index)
             return [self.locations[index] if index<self.number_locations else None for index in indices]
 
     def extract(self, local_filename):
